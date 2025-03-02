@@ -15,6 +15,15 @@ type User struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+func (u Users) WithID(id int) (User, error) {
+	for _, user := range u {
+		if user.ID == id {
+			return user, nil
+		}
+	}
+	return User{}, fmt.Errorf("could not find user with id in slice. %w", ErrUserNotPresent)
+}
+
 type Actions []Action
 type Action struct {
 	ID         int       `json:"id"`
@@ -24,11 +33,12 @@ type Action struct {
 	CreatedAt  time.Time `json:"createdAt"`
 }
 
-func (u Users) WithID(id int) (User, error) {
-	for _, user := range u {
-		if user.ID == id {
-			return user, nil
+func (a Actions) ByUserWithID(userID int) Actions {
+	actionsByUser := make(Actions, 0)
+	for _, action := range a {
+		if action.UserID == userID {
+			actionsByUser = append(actionsByUser, action)
 		}
 	}
-	return User{}, fmt.Errorf("could not find user with id in slice. %w", ErrUserNotPresent)
+	return actionsByUser
 }

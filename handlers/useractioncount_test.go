@@ -7,12 +7,11 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 )
 
-func TestHandleUser(t *testing.T) {
+func TestHandleUserActionCount(t *testing.T) {
 	mockService := mocks.ProcessingService{}
-	u := NewUserHandler(&mockService)
+	uac := NewUserActionCountHandler(&mockService)
 	tests := []struct {
 		name           string
 		urlPath        string
@@ -22,42 +21,38 @@ func TestHandleUser(t *testing.T) {
 	}{
 		{
 			name:           "Invalid user ID format",
-			urlPath:        "/users/abc",
+			urlPath:        "/users/abc/actions/count",
 			mockSetup:      func() {},
 			expectedStatus: http.StatusBadRequest,
 			expectedBody:   "Invalid user ID\n",
 		},
 		{
 			name:    "User not found",
-			urlPath: "/users/42",
+			urlPath: "/users/42/actions/count",
 			mockSetup: func() {
-				mockService.NextUserErr = types.ErrUserNotPresent
+				mockService.NextUserActionCountErr = types.ErrUserNotPresent
 			},
 			expectedStatus: http.StatusNotFound,
 			expectedBody:   "404 page not found\n",
 		},
 		{
 			name:    "Internal server error",
-			urlPath: "/users/99",
+			urlPath: "/users/99/actions/count",
 			mockSetup: func() {
-				mockService.NextUserErr = errors.New("test error")
+				mockService.NextUserActionCountErr = errors.New("test error")
 			},
 			expectedStatus: http.StatusInternalServerError,
 			expectedBody:   "error getting user with ID: 99\n",
 		},
 		{
 			name:    "Valid user ID",
-			urlPath: "/users/1",
+			urlPath: "/users/1/actions/count",
 			mockSetup: func() {
-				mockService.NextUserErr = nil
-				mockService.NextUserResult = types.User{
-					ID:        1,
-					Name:      "Test Name",
-					CreatedAt: time.Date(2025, 03, 02, 11, 37, 0, 0, time.UTC),
-				}
+				mockService.NextUserActionCountErr = nil
+				mockService.NextUserActionCountResult = 5
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   `{"id":1,"name":"Test Name","createdAt":"2025-03-02T11:37:00Z"}`,
+			expectedBody:   `{"count":5}`,
 		},
 	}
 
@@ -68,7 +63,7 @@ func TestHandleUser(t *testing.T) {
 			req := httptest.NewRequest(http.MethodGet, tt.urlPath, nil)
 			w := httptest.NewRecorder()
 
-			u.Handle(w, req)
+			uac.Handle(w, req)
 
 			res := w.Result()
 			defer res.Body.Close()

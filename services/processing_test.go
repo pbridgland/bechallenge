@@ -73,3 +73,71 @@ func TestUser(t *testing.T) {
 		})
 	}
 }
+
+func TestUserActionCount(t *testing.T) {
+	mockService := mocks.DataService{}
+	p := NewProcessingService(&mockService)
+	tests := []struct {
+		name          string
+		id            int
+		mockSetup     func(t *testing.T)
+		expectedCount int
+		expectedError error
+	}{
+		{
+			name: "User with actions",
+			id:   1,
+			mockSetup: func(t *testing.T) {
+				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				if err != nil {
+					t.Fatalf("%v", err)
+				}
+			},
+			expectedCount: 3,
+			expectedError: nil,
+		},
+		{
+			name: "User with no actions",
+			id:   10,
+			mockSetup: func(t *testing.T) {
+				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				if err != nil {
+					t.Fatalf("%v", err)
+				}
+			},
+			expectedCount: 0,
+			expectedError: nil,
+		},
+		{
+			name: "Invalid UserID",
+			id:   100,
+			mockSetup: func(t *testing.T) {
+				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				if err != nil {
+					t.Fatalf("%v", err)
+				}
+			},
+			expectedCount: 0,
+			expectedError: types.ErrUserNotPresent,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.mockSetup(t)
+
+			gotCount, gotErr := p.UserActionCount(tt.id)
+
+			if !errors.Is(gotErr, tt.expectedError) {
+				t.Errorf("expected error to wrap %v but got %v", tt.expectedError, gotErr)
+			}
+			if tt.expectedError != nil {
+				return
+			}
+
+			if tt.expectedCount != gotCount {
+				t.Errorf("expected count to be %d but got %d", tt.expectedCount, gotCount)
+			}
+		})
+	}
+}

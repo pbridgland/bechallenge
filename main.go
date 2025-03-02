@@ -19,12 +19,14 @@ func main() {
 	}
 	processingService := services.NewProcessingService(&dataService)
 	userHandler := handlers.NewUserHandler(&processingService)
+	userActionCountHandler := handlers.NewUserActionCountHandler(&processingService)
 
 	flag.IntVar(&port, "port", 3000, "port to run the service on")
 	flag.Parse()
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/users/{id}", userHandler.Handle)
+	mux.HandleFunc("/users/{id}/actions/count", userActionCountHandler.Handle)
 	addr := fmt.Sprintf(":%d", port)
 	http.ListenAndServe(addr, mux)
 }

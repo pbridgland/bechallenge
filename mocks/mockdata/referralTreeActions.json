@@ -1,0 +1,56 @@
+[
+    {
+        "ID":         1,
+        "Type":       "REFER_USER",
+        "UserID":     1,
+        "TargetUser": 2
+    },
+    {
+        "ID":         2,
+        "Type":       "REFER_USER",
+        "UserID":     1,
+        "TargetUser": 3
+    },
+    {
+        "ID":         3,
+        "Type":       "REFER_USER",
+        "UserID":     1,
+        "TargetUser": 4
+    },
+    {
+        "ID":         4,
+        "Type":       "REFER_USER",
+        "UserID":     2,
+        "TargetUser": 5
+    },
+    {
+        "ID":         5,
+        "Type":       "REFER_USER",
+        "UserID":     2,
+        "TargetUser": 6
+    },
+    {
+        "ID":         6,
+        "Type":       "REFER_USER",
+        "UserID":     3,
+        "TargetUser": 8
+    },
+    {
+        "ID":         7,
+        "Type":       "REFER_USER",
+        "UserID":     5,
+        "TargetUser": 7
+    },
+    {
+        "ID":         8,
+        "Type":       "REFER_USER",
+        "UserID":     8,
+        "TargetUser": 9
+    },
+    {
+        "ID":         9,
+        "Type":       "REFER_USER",
+        "UserID":     9,
+        "TargetUser": 10
+    }
+]
