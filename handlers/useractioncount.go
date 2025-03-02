@@ -17,6 +17,7 @@ type userActionCount struct {
 	processingService interfaces.ProcessingService
 }
 
+// NewUserActionCountHandler creates a new instance of the UserActionCountHandler
 func NewUserActionCountHandler(processingService interfaces.ProcessingService) userActionCount {
 	return userActionCount{
 		processingService: processingService,

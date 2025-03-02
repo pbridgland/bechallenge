@@ -15,6 +15,7 @@ type User struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+// WithID returns the user with the given ID
 func (u Users) WithID(id int) (User, error) {
 	for _, user := range u {
 		if user.ID == id {
@@ -33,6 +34,7 @@ type Action struct {
 	CreatedAt  time.Time `json:"createdAt"`
 }
 
+// ByUserWithID returns all actions that were performed by the user with the given ID
 func (a Actions) ByUserWithID(userID int) Actions {
 	actionsByUser := make(Actions, 0)
 	for _, action := range a {

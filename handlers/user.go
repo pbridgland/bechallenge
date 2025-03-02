@@ -17,6 +17,7 @@ type user struct {
 	processingService interfaces.ProcessingService
 }
 
+// NewUserHandler creates a new instance of the User
 func NewUserHandler(processingService interfaces.ProcessingService) user {
 	return user{
 		processingService: processingService,

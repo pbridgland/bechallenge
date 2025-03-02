@@ -1,4 +1,4 @@
-package services
+package processingservice
 
 import (
 	"bechallenge/mocks"
@@ -88,7 +88,7 @@ func TestUserActionCount(t *testing.T) {
 			name: "User with actions",
 			id:   1,
 			mockSetup: func(t *testing.T) {
-				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				err := mockService.SetSampleData("../../mocks/mockdata/referralTreeUsers.json", "../../mocks/mockdata/referralTreeActions.json")
 				if err != nil {
 					t.Fatalf("%v", err)
 				}
@@ -100,7 +100,7 @@ func TestUserActionCount(t *testing.T) {
 			name: "User with no actions",
 			id:   10,
 			mockSetup: func(t *testing.T) {
-				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				err := mockService.SetSampleData("../../mocks/mockdata/referralTreeUsers.json", "../../mocks/mockdata/referralTreeActions.json")
 				if err != nil {
 					t.Fatalf("%v", err)
 				}
@@ -112,7 +112,7 @@ func TestUserActionCount(t *testing.T) {
 			name: "Invalid UserID",
 			id:   100,
 			mockSetup: func(t *testing.T) {
-				err := mockService.SetSampleData("../mocks/mockdata/referralTreeUsers.json", "../mocks/mockdata/referralTreeActions.json")
+				err := mockService.SetSampleData("../../mocks/mockdata/referralTreeUsers.json", "../../mocks/mockdata/referralTreeActions.json")
 				if err != nil {
 					t.Fatalf("%v", err)
 				}

@@ -1,4 +1,4 @@
-package services
+package dataservice
 
 import (
 	"bechallenge/types"

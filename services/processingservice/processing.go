@@ -1,4 +1,4 @@
-package services
+package processingservice
 
 import (
 	"bechallenge/interfaces"
