@@ -42,7 +42,7 @@ func TestHandleUserActionCount(t *testing.T) {
 				mockService.NextUserActionCountErr = errors.New("test error")
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   "error getting user with ID: 99\n",
+			expectedBody:   "error getting action count for user with ID: 99\n",
 		},
 		{
 			name:    "Valid user ID",

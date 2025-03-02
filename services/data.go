@@ -12,9 +12,12 @@ type data struct {
 	actions types.Actions
 }
 
+// NewDataService creates a new instance of the Data Service
 func NewDataService(path string) (data, error) {
 	actionsFile := filepath.Join(path, "actions.json")
 	usersFile := filepath.Join(path, "users.json")
+
+	// read in the actions.json file and unmarshal it
 	var actions types.Actions
 	actionsBytes, err := os.ReadFile(actionsFile)
 	if err != nil {
@@ -25,6 +28,7 @@ func NewDataService(path string) (data, error) {
 		return data{}, err
 	}
 
+	// read in the users.json file and unmarshal it
 	var users types.Users
 	usersBytes, err := os.ReadFile(usersFile)
 	if err != nil {
@@ -35,16 +39,19 @@ func NewDataService(path string) (data, error) {
 		return data{}, err
 	}
 
+	//create a data struct with this unmarshalled data
 	return data{
 		users:   users,
 		actions: actions,
 	}, nil
 }
 
+// Users returns a slice of all users
 func (d *data) Users() types.Users {
 	return d.users
 }
 
+// Actions returns a slice of all actions
 func (d *data) Actions() types.Actions {
 	return d.actions
 }

@@ -46,7 +46,7 @@ func (uac userActionCount) Handle(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	} else if err != nil {
-		errorMsg := fmt.Sprintf("error getting user with ID: %d", id)
+		errorMsg := fmt.Sprintf("error getting action count for user with ID: %d", id)
 		http.Error(w, errorMsg, http.StatusInternalServerError)
 		return
 	}
