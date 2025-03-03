@@ -3,7 +3,6 @@ package handlers
 import (
 	"bechallenge/interfaces"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -21,8 +20,7 @@ func NewReferralIndexesHandler(referralService interfaces.ReferralService) refer
 func (ri referalIndexes) Handle(w http.ResponseWriter, r *http.Request) {
 	referralIndexes, err := ri.referralService.ReferralIndexes()
 	if err != nil {
-		errorMsg := fmt.Sprintf("error getting referralindexes")
-		http.Error(w, errorMsg, http.StatusInternalServerError)
+		http.Error(w, "error getting referralindexes", http.StatusInternalServerError)
 		return
 	}
 

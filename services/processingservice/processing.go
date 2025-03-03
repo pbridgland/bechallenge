@@ -69,6 +69,8 @@ func (p *processing) NextActions(actionType string) (map[string]float64, error) 
 		probabilities[actionType] = math.Round(probability*100) / 100
 	}
 
+	//this never returns an error so could just omit that from the returns
+	//leaving in as intended behaviour may be to respond with a 404 if action does not exist, or if it is always a final action e.g. "DELETE_ACCOUNT"
 	return probabilities, nil
 }
 

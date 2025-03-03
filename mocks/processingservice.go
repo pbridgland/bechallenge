@@ -7,10 +7,12 @@ type ProcessingService struct {
 	NextUserErr               error
 	NextUserActionCountResult int
 	NextUserActionCountErr    error
+	NextResultForNextActions  map[string]float64
+	NextErrorForNextActions   error
 }
 
 func (p *ProcessingService) NextActions(actionType string) (map[string]float64, error) {
-	panic("unimplemented")
+	return p.NextResultForNextActions, p.NextErrorForNextActions
 }
 
 func (p *ProcessingService) User(id int) (types.User, error) {

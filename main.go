@@ -2,7 +2,7 @@ package main
 
 import (
 	"bechallenge/handlers"
-	"bechallenge/services/dataservice"
+	"bechallenge/repos"
 	"bechallenge/services/processingservice"
 	"bechallenge/services/referralservice"
 	"flag"
@@ -16,7 +16,7 @@ var (
 
 func main() {
 	// Resolve dependencies and inject them where needed
-	dataService, err := dataservice.NewDataService("data")
+	dataService, err := repos.NewDataRepo("data")
 	if err != nil {
 		panic(err.Error())
 	}

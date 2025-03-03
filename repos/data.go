@@ -1,4 +1,4 @@
-package dataservice
+package repos
 
 import (
 	"bechallenge/types"
@@ -12,8 +12,8 @@ type data struct {
 	actions types.Actions
 }
 
-// NewDataService creates a new instance of the Data Service
-func NewDataService(path string) (data, error) {
+// NewDataRepo creates a new instance of the Data Repository
+func NewDataRepo(path string) (data, error) {
 	actionsFile := filepath.Join(path, "actions.json")
 	usersFile := filepath.Join(path, "users.json")
 

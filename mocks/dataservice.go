@@ -6,20 +6,20 @@ import (
 	"os"
 )
 
-type DataService struct {
+type DataRepo struct {
 	NextUsers   types.Users
 	NextActions types.Actions
 }
 
-func (d *DataService) Users() types.Users {
+func (d *DataRepo) Users() types.Users {
 	return d.NextUsers
 }
 
-func (d *DataService) Actions() types.Actions {
+func (d *DataRepo) Actions() types.Actions {
 	return d.NextActions
 }
 
-func (d *DataService) SetSampleData(userPath, actionPath string) error {
+func (d *DataRepo) SetSampleData(userPath, actionPath string) error {
 	var actions types.Actions
 	actionsBytes, err := os.ReadFile(actionPath)
 	if err != nil {

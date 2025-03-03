@@ -1,4 +1,4 @@
-package dataservice
+package repos
 
 import (
 	"bechallenge/types"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestData(t *testing.T) {
-	d, err := NewDataService("../../data")
+	d, err := NewDataRepo("../data")
 	if err != nil {
 		t.Errorf("expected err to be nil, got %v", err)
 	}

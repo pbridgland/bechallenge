@@ -4,12 +4,13 @@ import (
 	"bechallenge/mocks"
 	"bechallenge/types"
 	"errors"
+	"reflect"
 	"testing"
 	"time"
 )
 
 func TestUser(t *testing.T) {
-	mockService := mocks.DataService{}
+	mockService := mocks.DataRepo{}
 	p := NewProcessingService(&mockService)
 	tests := []struct {
 		name          string
@@ -75,7 +76,7 @@ func TestUser(t *testing.T) {
 }
 
 func TestUserActionCount(t *testing.T) {
-	mockService := mocks.DataService{}
+	mockService := mocks.DataRepo{}
 	p := NewProcessingService(&mockService)
 	tests := []struct {
 		name          string
@@ -93,7 +94,7 @@ func TestUserActionCount(t *testing.T) {
 					t.Fatalf("%v", err)
 				}
 			},
-			expectedCount: 3,
+			expectedCount: 4,
 			expectedError: nil,
 		},
 		{
@@ -137,6 +138,55 @@ func TestUserActionCount(t *testing.T) {
 
 			if tt.expectedCount != gotCount {
 				t.Errorf("expected count to be %d but got %d", tt.expectedCount, gotCount)
+			}
+		})
+	}
+}
+
+func TestNextActions(t *testing.T) {
+	mockService := mocks.DataRepo{}
+	p := NewProcessingService(&mockService)
+	tests := []struct {
+		name                string
+		actionType          string
+		mockSetup           func(t *testing.T)
+		expectedNextActions map[string]float64
+		expectedError       error
+	}{
+		{
+			name:       "Test REFER_USER",
+			actionType: "REFER_USER",
+			mockSetup: func(t *testing.T) {
+				err := mockService.SetSampleData("../../mocks/mockdata/referralTreeUsers.json", "../../mocks/mockdata/referralTreeActions.json")
+				if err != nil {
+					t.Fatalf("%v", err)
+				}
+			},
+			expectedNextActions: map[string]float64{
+				"REFER_USER":  0.5,
+				"TESTACTION1": 0.17,
+				"TESTACTION2": 0.17,
+				"TESTACTION3": 0.17,
+			},
+			expectedError: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.mockSetup(t)
+
+			gotNextActions, gotErr := p.NextActions(tt.actionType)
+
+			if !errors.Is(gotErr, tt.expectedError) {
+				t.Errorf("expected error to wrap %v but got %v", tt.expectedError, gotErr)
+			}
+			if tt.expectedError != nil {
+				return
+			}
+
+			if !reflect.DeepEqual(tt.expectedNextActions, gotNextActions) {
+				t.Errorf("expected next actions to be %v but got %v", tt.expectedNextActions, gotNextActions)
 			}
 		})
 	}

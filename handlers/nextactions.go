@@ -8,7 +8,7 @@ import (
 	"regexp"
 )
 
-var nextActionsPattern = regexp.MustCompile(`^/actions/(.*)/nextactions$`)
+var nextActionsPattern = regexp.MustCompile(`^/actions/(.+)/nextactions$`)
 
 type nextActions struct {
 	processingService interfaces.ProcessingService
