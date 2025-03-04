@@ -12,11 +12,11 @@ const referUserType = "REFER_USER"
 var err_methodCallOnNilReferralUser = errors.New("method called on nil referralUser")
 
 type referral struct {
-	data interfaces.DataService
+	data interfaces.DataRepo
 }
 
 // NewReferralService creates a new instance of the Processing Service
-func NewReferralService(data interfaces.DataService) referral {
+func NewReferralService(data interfaces.DataRepo) referral {
 	return referral{
 		data: data,
 	}

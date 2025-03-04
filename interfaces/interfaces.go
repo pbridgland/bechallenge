@@ -9,8 +9,8 @@ type ProcessingService interface {
 	NextActions(actionType string) (map[string]float64, error)
 }
 
-// DataService is used to get raw data for users and actions
-type DataService interface {
+// DataRepo is used to get raw data for users and actions
+type DataRepo interface {
 	Users() types.Users
 	Actions() types.Actions
 }

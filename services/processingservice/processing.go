@@ -8,11 +8,11 @@ import (
 )
 
 type processing struct {
-	data interfaces.DataService
+	data interfaces.DataRepo
 }
 
 // NewProcessingService creates a new instance of the Processing Service
-func NewProcessingService(data interfaces.DataService) processing {
+func NewProcessingService(data interfaces.DataRepo) processing {
 	return processing{
 		data: data,
 	}
